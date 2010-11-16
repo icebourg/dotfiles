@@ -107,15 +107,6 @@ function pdfman () {
 	man -t $* | open -f -a preview
 }
 
-# get IP adresses -- both internal and external
-function ip() {
-	internalIP=$(/sbin/ifconfig en1 | awk '/inet/ { print $2 } ' | \
-		sed -e s/addr://)
-
-	echo "Internal IP is " $internalIP 
-	lynx whatismyipaddress.info --dump | grep "Your IP address is"
-}
-
 # generate a few random numbers
 function randn() {
 
@@ -132,18 +123,4 @@ function password() {
 	do
 		~/bin/randompassword.sh
 	done
-}
-
-# Print out current calendar with highlighted day
-calendar() {
-   if [[ ! -f /usr/bin/cal ]] ; then
-      echo "Please install cal before trying to use it!"
-      return
-   fi
-
-   if [[ "$#" = "0" ]] ; then
-      /usr/bin/cal | egrep -C 40 --color "\<$(date +%e| tr -d ' ')\>"
-   else
-      /usr/bin/cal $@ | egrep -C 40 --color "\<($(date +%B)|$(date +%e | tr -d ' '))\>"
-   fi
 }
